@@ -1,3 +1,5 @@
+---
+
 ## Overview
 
 BlendBerry is a flexible remote configuration system that allows mobile applications to fetch and update configurations dynamically from a backend service. It simplifies the process of managing app configurations, enabling teams to adjust app behavior, UI themes, features, and more remotely.
@@ -9,6 +11,7 @@ BlendBerry is a flexible remote configuration system that allows mobile applicat
 - [Architecture](#architecture)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Example App](#example-app)
 - [API Reference](#api-reference)
 - [Contributing](#contributing)
 - [License](#license)
@@ -62,7 +65,7 @@ To integrate **BlendBerry SDK** into your Flutter app, follow these steps:
 
 ```yaml
 dependencies:
-  blendberry_Flutter_sdk:
+  blendberry_flutter_sdk:
     git:
       url: git://github.com/blendberry/blendberry-flutter-sdk.git
       ref: main # or a specific branch/tag
@@ -86,9 +89,8 @@ Here’s how you can use the BlendBerry SDK to fetch and use configurations in y
 
 Before using the configurations, you need to load them:
 
-```Flutter
+```dart
 final configMediator = RemoteConfigMediatorImpl();
-
 await configMediator.loadConfigs(Environment.staging.value); // Specify the environment (e.g., 'staging')
 ```
 
@@ -98,7 +100,7 @@ This will either fetch the configurations from the backend or use the local cach
 
 Once the configurations are loaded, you can dispatch them using a mapper:
 
-```Flutter
+```dart
 final themeConfig = configMediator.dispatch(CustomMapper());
 print('Should use dark theme: ${themeConfig.useDarkTheme}');
 ```
@@ -107,7 +109,7 @@ print('Should use dark theme: ${themeConfig.useDarkTheme}');
 
 Make sure to handle connection errors properly as this package only focuses on remote configurations.
 
-```Flutter
+```dart
 try {
   await configMediator.loadConfigs(Environment.staging.value);
 } catch (e) {
@@ -115,7 +117,26 @@ try {
 }
 ```
 
-It usually has to be aligned with the implementation of a certain NetworkChecker.
+---
+
+## Example App
+
+A working example is available in the `/example` directory.  
+This is a minimal Flutter application that demonstrates how to implement:
+It serves two main purposes:
+
+1. **Real-World Integration Test** – To validate that the SDK works correctly within a Flutter environment.
+2. **Usage Guide for Developers** – To provide a working example of how to integrate and use the SDK in their own apps.
+
+To run the example:
+
+```bash
+cd example
+flutter pub get
+flutter run
+```
+
+> ℹ️ Dependencies such as `shared_preferences` used in `/example` are **not required** by the SDK itself. This ensures the core package remains lightweight and platform-agnostic.
 
 ---
 
@@ -180,3 +201,5 @@ Open a pull request on the original repository with a description of your change
 ## License
 
 The **BlendBerry SDK for Flutter** is licensed under the [MIT License](LICENSE).
+
+---
